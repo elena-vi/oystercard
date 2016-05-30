@@ -38,8 +38,8 @@ describe Oystercard do
 	describe "#touch_in" do
 		it {is_expected.to respond_to(:touch_in)}
 		it 'touch in and check status' do
-			expect(card.touch_in).to eq true
-			expect(card.in_journey?).to eq true
+			expect{card.touch_in}.to raise_error "Error: please top up"
+			# expect(card.in_journey?).to eq true
 		end
 	end
 	describe "#touch_out" do
