@@ -2,15 +2,15 @@ require 'oystercard.rb'
 
 describe Oystercard do
 
-	subject(:card) {described_class.new}
-
+	subject(:card) {described_class.new.top_up(5)}
+	let(:station) {double :station}
 	it {is_expected.to respond_to(:in_journey?)}
 
 	describe "#balance" do
 		it {is_expected.to respond_to(:balance)}
 
 		it 'initializes Oystercard with default balance 0' do
-			expect(card.balance).to eq 0
+			expect(card.balance).to eq 5
 		end
 	end
 
@@ -27,26 +27,21 @@ describe Oystercard do
 		end
 	end
 
-	# describe "#deduct" do
-	# 	it {is_expected.to respond_to(:deduct).with(1).argument }
-
-	# 	it 'tops up with £10' do
-	# 		expect{ card.deduct 10 }.to change{ card.balance }.by -10
-	# 	end
-	# end
-
 	describe "#touch_in" do
-		it {is_expected.to respond_to(:touch_in)}
+		it {is_expected.to respond_to(:touch_in).with(1).argument}
 		it 'touch in and check status' do
-			expect{card.touch_in}.to raise_error "Error: please top up"
+			new_card = described_class.new
+			expect{new_card.touch_in(station)}.to raise_error "Error: please top up"
 			# expect(card.in_journey?).to eq true
 		end
 	end
 	describe "#touch_out" do
 		it {is_expected.to respond_to(:touch_out)}
 		it 'touch out and check status' do
+			card.touch_in(station)
 			expect{ card.touch_out }.to change{ card.balance }.by -1
 			expect(card.in_journey?).to eq false
+			expect(card.entry_station).to eq nil
 		end
 	end
 end
