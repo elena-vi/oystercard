@@ -8,4 +8,4 @@
 # p oc.top_up(10)
 # p "---"
 # p oc.balance
-# p oc.top_up(90)
+# p oc.deduct(5)
