@@ -27,13 +27,13 @@ describe Oystercard do
 		end
 	end
 
-	describe "#deduct" do
-		it {is_expected.to respond_to(:deduct).with(1).argument }
+	# describe "#deduct" do
+	# 	it {is_expected.to respond_to(:deduct).with(1).argument }
 
-		it 'tops up with £10' do
-			expect{ card.deduct 10 }.to change{ card.balance }.by -10
-		end
-	end
+	# 	it 'tops up with £10' do
+	# 		expect{ card.deduct 10 }.to change{ card.balance }.by -10
+	# 	end
+	# end
 
 	describe "#touch_in" do
 		it {is_expected.to respond_to(:touch_in)}
@@ -45,7 +45,7 @@ describe Oystercard do
 	describe "#touch_out" do
 		it {is_expected.to respond_to(:touch_out)}
 		it 'touch out and check status' do
-			expect(card.touch_out).to eq false
+			expect{ card.touch_out }.to change{ card.balance }.by -1
 			expect(card.in_journey?).to eq false
 		end
 	end
