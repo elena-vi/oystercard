@@ -5,6 +5,7 @@ describe Journey do
   let(:entry_station) { double :station }
   let(:exit_station) { double :station }
   let(:journey) { described_class.new(entry_station) }
+  let(:no_in_journey) { described_class.new() }
 
   describe "#initialize" do
 
@@ -18,10 +19,8 @@ describe Journey do
 
     context "when not given entry_station at initialize" do
 
-      let(:journey) { described_class.new() }
-
-      it "has entry station on initialization" do
-        expect(journey.entry_station).to eq nil
+      it "has no entry station on initialization" do
+        expect(no_in_journey.entry_station).to eq nil
       end
 
     end
@@ -58,4 +57,32 @@ describe Journey do
 
   end
 
+  describe "#fare" do
+
+    context "no touch in and no touch out" do
+
+      it "gives penalty fare by default" do
+        # let(:no_in_journey) { described_class.new() }
+        expect(no_in_journey.fare).to eq Journey::PENALTY_FARE
+      end
+
+    end
+
+    context "touch in and no touch out" do
+      it "gives penalty fare in this context" do
+        # let(:journey) { described_class.new(entry_station) }
+        expect(journey.fare).to eq Journey::PENALTY_FARE
+      end
+    end
+
+    context "touch out and no touch in" do
+      it "gives penalty fare in this context" do
+        # let(:no_in_journey) { described_class.new() }
+        no_in_journey.finish(exit_station)
+        expect(no_in_journey.fare).to eq Journey::PENALTY_FARE
+      end
+
+    end
+
+  end
 end
