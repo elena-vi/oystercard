@@ -2,7 +2,7 @@ require_relative 'journeylog'
 
 class Oyster_card
 
-	attr_reader :balance
+	attr_reader :balance, :journey_log
 	MAXIMUM = 90
 	MINIMUM = 1
 
@@ -12,12 +12,12 @@ class Oyster_card
 	end
 
 	def top_up value
-		fail "Cannot top up more than £90." if value > MAXIMUM
+		fail "Cannot top up more than £90." if can_top_up?(value)
 		@balance += value
 	end
 
 	def touch_in entry_station
-		fail "Insufficient funds" if @balance < MINIMUM
+		fail "Insufficient funds" if can_travel?
 		deduct(@journey_log.start(entry_station))
 	end
 
@@ -26,6 +26,15 @@ class Oyster_card
 	end
 
 	private
+
+	def can_top_up? value
+		value > MAXIMUM
+	end 
+
+	def can_travel?
+		@balance < MINIMUM
+	end 
+
 	def deduct value
 		@balance -= value
 	end
