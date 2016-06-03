@@ -3,20 +3,34 @@ require 'Station'
 
 
 describe "Feature test" do
-	describe Oyster_card do
-		it "can be created" do
-			expect(Oyster_card).to respond_to(:new)
+	describe Station do
+		describe "Bank is a station" do
+			@bank = Station.new(1, "Bank")
+
+			class Station
+				attr_reader :zone, :name
+
+				def initialize zone, name
+					@zone = zone
+					@name = name
+				end
+
+			end
+			# it "" do
+			# 	expect(Oyster_card).to respond_to(:new)
+			# end
+			# card = Oyster_card.new
+			# it "it can be topped up" do
+			# 	expect(card).to respond_to(:top_up)
+			# end
+			# it "it can be touched in" do
+			# 	expect(card).to respond_to(:touch_in)
+			# end
+			# it "it can be touched out" do
+			# 	expect(card).to respond_to(:touch_out)
 		end
-		card = Oyster_card.new
-		it "it can be topped up" do
-			expect(card).to respond_to(:top_up)
-		end
-		it "it can be touched in" do
-			expect(card).to respond_to(:touch_in)
-		end
-		it "it can be touched out" do
-			expect(card).to respond_to(:touch_out)
-		end
+	end
+	it "makes a complete journey" do
 	end
 end
 
